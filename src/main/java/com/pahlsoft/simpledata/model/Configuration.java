@@ -1,5 +1,6 @@
 package com.pahlsoft.simpledata.model;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class Configuration {
@@ -75,5 +76,12 @@ public class Configuration {
 
     public void setWorkloads(List<Workload> workloads) {
         this.workloads = workloads;
+    }
+
+    public boolean emptyFields() throws IllegalAccessException {
+        for (Field f : getClass().getDeclaredFields())
+            if (f.get(this) != null)
+                return false;
+        return true;
     }
 }
