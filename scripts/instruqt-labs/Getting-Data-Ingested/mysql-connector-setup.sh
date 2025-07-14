@@ -67,7 +67,7 @@ fi
 sudo docker run -d --restart=always --name mysql-sales \
   -v ~/root:/config \
   --network "elastic" \
-  --tty docker.elastic.co/enterprise-search/elastic-connectors:8.18.1 \
+  --tty docker.elastic.co/enterprise-search/elastic-connectors:8.18.3 \
   /app/bin/elastic-ingest -c /config/config-mysql.yml
 
 # Print summary for the student
