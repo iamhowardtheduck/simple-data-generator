@@ -38,9 +38,6 @@ curl -fsSL "$OSQUERY_KEY_URL" | gpg --dearmor -o /usr/share/keyrings/osquery-arc
 echo "deb [signed-by=/usr/share/keyrings/osquery-archive-keyring.gpg] https://pkg.osquery.io/deb deb main"   > /etc/apt/sources.list.d/osquery.list
 
 wait_for_dpkg_lock
-apt-get update
-
-wait_for_dpkg_lock
 apt-get install -y osquery -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 # Create configuration directory
