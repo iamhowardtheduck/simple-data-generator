@@ -29,6 +29,9 @@ wait_for_dpkg_lock() {
 export DEBIAN_FRONTEND=noninteractive
 
 wait_for_dpkg_lock
+sudo apt update -y
+
+wait_for_dpkg_lock
 apt-get install -y curl gnupg lsb-release wget software-properties-common jq -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 # Add osquery GPG key and repository
