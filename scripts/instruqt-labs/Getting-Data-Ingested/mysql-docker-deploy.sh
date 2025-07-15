@@ -25,7 +25,7 @@ wait_for_dpkg_lock() {
 }
 
 wait_for_dpkg_lock
-sudo apt update -y && sudo apt upgrade -y
+sudo apt update -y
 
 wait_for_dpkg_lock
 sudo apt install iputils-ping -y
