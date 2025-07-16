@@ -8,7 +8,6 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # DPKG lock wait function
-
 wait_for_dpkg_lock() {
   local max_attempts=30
   local attempt=0
@@ -25,36 +24,36 @@ wait_for_dpkg_lock() {
   done
 }
 
-
 export DEBIAN_FRONTEND=noninteractive
 
 wait_for_dpkg_lock
 apt-get update
 
 wait_for_dpkg_lock
-apt-get install -y curl gnupg lsb-release wget software-properties-common jq -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+apt-get install -y curl gnupg lsb-release wget software-properties-common jq gdebi-core -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
-# Add osquery GPG key and repository
-OSQUERY_KEY_URL="https://pkg.osquery.io/deb/pubkey.gpg"
-curl -fsSL "$OSQUERY_KEY_URL" | gpg --dearmor -o /usr/share/keyrings/osquery-archive-keyring.gpg
+# Download and install osquery 5.18.1 from official source
+OSQUERY_DEB_URL="https://pkg.osquery.io/deb/osquery_5.18.1-1.linux_amd64.deb"
+TMP_DEB="/tmp/osquery.deb"
 
-echo "deb [signed-by=/usr/share/keyrings/osquery-archive-keyring.gpg] https://pkg.osquery.io/deb deb main"   > /etc/apt/sources.list.d/osquery.list
+echo "Downloading osquery 5.18.1..."
+curl -fsSL "$OSQUERY_DEB_URL" -o "$TMP_DEB"
 
 wait_for_dpkg_lock
-apt-get install -y osquery -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+gdebi -n "$TMP_DEB"
+rm -f "$TMP_DEB"
 
 # Create configuration directory
 mkdir -p /etc/osquery
 CONFIG_FILE="/etc/osquery/osquery.conf"
 PACKS_DIR="/etc/osquery/packs"
 
-# Download config from a stable tag (osquery 5.11.0)
-curl -fsSL https://raw.githubusercontent.com/osquery/osquery/5.11.0/tools/deployment/osquery.example.conf -o "$CONFIG_FILE"
+# Download config and packs from 5.18.1 tag
+curl -fsSL https://raw.githubusercontent.com/osquery/osquery/5.18.1/tools/deployment/osquery.example.conf -o "$CONFIG_FILE"
 
-# Download all packs from same version
 mkdir -p "$PACKS_DIR"
-curl -sL https://github.com/osquery/osquery/archive/refs/tags/5.11.0.tar.gz | \
-  tar -xz --strip-components=2 -C "$PACKS_DIR" osquery-5.11.0/packs
+curl -sL https://github.com/osquery/osquery/archive/refs/tags/5.18.1.tar.gz | \
+  tar -xz --strip-components=2 -C "$PACKS_DIR" osquery-5.18.1/packs
 
 # Inject all packs into config
 PACKS_JSON=$(jq -n '{packs: {} }')
@@ -70,4 +69,4 @@ systemctl daemon-reexec
 systemctl enable osqueryd
 systemctl restart osqueryd
 
-echo "✅ Osquery installed and fully configured with default packs (v5.11.0)."
+echo "✅ Osquery 5.18.1 installed and fully configured with default packs."
