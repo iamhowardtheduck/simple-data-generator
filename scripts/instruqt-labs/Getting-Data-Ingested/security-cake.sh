@@ -6,8 +6,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Define the URL and filename
-URL="https://downloads.plex.tv/plex-media-server-new/1.41.8.9834-071366d65/debian/plexmediaserver_1.41.8.9834-071366d65_amd64.deb"
-FILE="plexmediaserver_1.41.8.9834-071366d65_amd64.deb"
+URL="https://downloads.plex.tv/plex-media-server-new/1.42.1.10060-4e8b05daf/debian/plexmediaserver_1.42.1.10060-4e8b05daf_amd64.deb"
+FILE="plexmediaserver_1.42.1.10060-4e8b05daf_amd64.deb"
 
 # Download the file
 wget "$URL" -O "$FILE"
