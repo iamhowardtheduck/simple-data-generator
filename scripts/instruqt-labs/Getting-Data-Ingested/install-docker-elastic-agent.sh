@@ -37,7 +37,7 @@ sudo docker run -d \
     --env KIBANA_FLEET_SETUP=1 \
     --env FLEET_INSECURE=true \
     -v /usr/local/share/ca-certificates/ca.crt:/usr/share/elastic-agent/certs/ca.crt:ro \
-    docker.elastic.co/elastic-agent/elastic-agent-complete:8.18.1
+    docker.elastic.co/elastic-agent/elastic-agent-complete:8.19.3
 
 cat <<EOF
 
