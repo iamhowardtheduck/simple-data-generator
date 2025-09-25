@@ -483,7 +483,18 @@ curl -X PUT "http://localhost:30920/_index_template/winlogbeat" -H "Content-Type
         "registry": {
           "type": "object",
           "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "strings": {
+                  "type": "keyword"
+                }
+              }
+            },
             "path": {
+              "type": "keyword"
+            },
+            "value": {
               "type": "keyword"
             }
           }
