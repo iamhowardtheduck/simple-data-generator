@@ -86,6 +86,14 @@
       }
     },
     {
+      "rename": {
+        "field": "eventtype",
+        "target_field": "event.type",
+        "ignore_missing": true,
+        "ignore_failure": true
+      }
+    },
+    {
       "set": {
         "ignore_failure": true,
         "field": "event.type",
@@ -206,6 +214,20 @@
         "ignore_failure": true,
         "field": "registry.path",
         "value": "HKLM\\\\Software\\\\Policies\\\\Microsoft\\\\Windows NT\\\\{{registry1}}\\\\{{registry2}}"
+      }
+    },
+    {
+      "set": {
+        "field": "registry.value",
+        "value": "{{registry1}}",
+        "ignore_failure": true
+      }
+    },
+    {
+      "set": {
+        "field": "registry.data.strings",
+        "value": "{{registry2}}",
+        "ignore_failure": true
       }
     },
     {
