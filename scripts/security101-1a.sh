@@ -42,7 +42,6 @@ gradle_version=$(gradle -v | grep "Gradle " | awk '{print $2}')
 echo "Gradle installed: Version $gradle_version"
 
 # Install Simple-Data-Generator
-git clone https://github.com/iamhowardtheduck/simple-data-generator.git
 cd /root/simple-data-generator && gradle clean; gradle build fatJar
 
 echo
