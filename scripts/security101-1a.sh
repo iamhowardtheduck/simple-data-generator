@@ -49,7 +49,7 @@ echo "Simple Data Generator installed"
 echo
 
 # Install LLM Connector
-bash /opt/workshops/elastic-llm.sh -k false -m claude-sonnet-4 -e true
+bash /opt/workshops/elastic-llm.sh -k false -m anthropic -e true
 
 echo
 echo "AI Assistant Connector configured as OpenAI"
